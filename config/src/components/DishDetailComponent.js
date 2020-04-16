@@ -2,36 +2,58 @@ import React from "react";
 import { Card, CardImg, CardText, CardBody, CardTitle } from "reactstrap";
 
 class DishDetail extends React.Component {
-  constructor(props) {
-    super(props);
+  renderDish(dish) {
+    return (
+      <div className="col-12 col-md-5 m-1">
+        <Card>
+          <CardImg top src={dish.image} alt={dish.name} />
+          <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+      </div>
+    );
+  }
+
+  renderComments(comments) {
+    if (comments != null)
+      return (
+        <div className="col-12 col-md-5 m-1" style={{ textAlign: "left" }}>
+          <h4>Comments</h4>
+          <ul className="list-unstyled">
+            {comments.map(com => {
+              return (
+                <li key={com.id}>
+                  <p>{com.comment}</p>
+                  <p>
+                    -- {com.author},{" "}
+                    {new Intl.DateTimeFormat("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "2-digit"
+                    }).format(new Date(Date.parse(com.date)))}
+                  </p>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
   }
   render() {
+    const dish = this.props.dish;
+
+    if (dish == null) {
+      return <div></div>;
+    }
+
+    const dishItem = this.renderDish(dish);
+    const commentItem = this.renderComments(dish.comments);
     return (
       <div className="row">
-        <Card className="col-12 col-md-5 m-1">
-          <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-          <CardBody>
-            <CardTitle>{this.props.dish.name}</CardTitle>
-            <CardText>{this.props.dish.description}</CardText>
-          </CardBody>
-        </Card>
-        <Card className="col-12 col-md-5 m-1">
-          <CardBody>
-            <CardTitle>Comments</CardTitle>
-            <CardText>
-              {this.props.dish.comments.map(com => {
-                return (
-                  <div>
-                    <p>{com.comment}</p>
-                    <p>
-                      -- {com.author}, {com.date}
-                    </p>
-                  </div>
-                );
-              })}
-            </CardText>
-          </CardBody>
-        </Card>
+        {dishItem}
+        {commentItem}
       </div>
     );
   }
