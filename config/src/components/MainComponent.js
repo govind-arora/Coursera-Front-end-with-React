@@ -10,10 +10,6 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 class Main extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const HomePage = () => {
       return (
