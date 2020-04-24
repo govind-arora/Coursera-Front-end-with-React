@@ -16,7 +16,8 @@
     "bootstrap-social": "^5.1.1",
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
-    "react-redux": "^5.0.7"
+    "react-redux": "^5.0.7",
+    "react-redux-form": "^1.16.14"
   },
   "scripts": {
     "start": "react-scripts start",
