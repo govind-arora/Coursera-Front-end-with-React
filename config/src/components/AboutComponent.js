@@ -5,9 +5,10 @@ import {
   Card,
   CardBody,
   CardHeader,
-  Media
+  Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 
 function About(props) {
   return (
@@ -86,12 +87,16 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          {props.leaders.map(leader => {
+          {props.leaders.leaders.map((leader) => {
             return (
               <div key={leader.id} className="col-12 mt-5">
                 <Media tag="li">
                   <Media left middle>
-                    <Media object src={leader.image} alt={leader.name}></Media>
+                    <Media
+                      object
+                      src={baseUrl + leader.image}
+                      alt={leader.name}
+                    ></Media>
                   </Media>
                   <Media body className="ml-5">
                     <Media heading>{leader.name}</Media>
