@@ -20,7 +20,8 @@
     "react-redux-form": "^1.16.14",
     "redux-thunk": "^2.3.0",
     "redux-logger": "^3.0.6",
-    "cross-fetch": "^3.0.4"
+    "cross-fetch": "^3.0.4",
+    "react-transition-group": "^2.3.0"
   },
   "scripts": {
     "start": "react-scripts start",
