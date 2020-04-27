@@ -51,5 +51,5 @@ address {
 .page-exit-active {
   opacity: 0.01;
   transform: translateX(100%);
-  translate: all 300ms ease-out;
+  transition: all 300ms ease-out;
 }
