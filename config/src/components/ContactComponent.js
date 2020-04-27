@@ -5,18 +5,18 @@ import {
   Button,
   Label,
   Col,
-  Row
+  Row,
 } from "reactstrap";
 
-import { Form, Control, Errors, actions } from "react-redux-form";
+import { Form, Control, Errors } from "react-redux-form";
 
 import { Link } from "react-router-dom";
 
-const required = val => val && val.length;
-const minLength = len => val => val && val.length >= len;
-const maxLength = len => val => !val || val.length <= len;
-const isNumber = val => !isNaN(Number(val));
-const validEmail = val =>
+const required = (val) => val && val.length;
+const minLength = (len) => (val) => val && val.length >= len;
+const maxLength = (len) => (val) => !val || val.length <= len;
+const isNumber = (val) => !isNaN(Number(val));
+const validEmail = (val) =>
   /^[A-Z][0-9]._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val);
 
 class Contact extends React.Component {
@@ -27,7 +27,15 @@ class Contact extends React.Component {
   }
 
   handleSubmit(values) {
-    alert("Current state: " + JSON.stringify(values));
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.agree,
+      values.contacttype,
+      values.message
+    );
     this.props.resetFeedbackForm();
   }
 
@@ -99,7 +107,7 @@ class Contact extends React.Component {
           <div className="col-12 col-md-9">
             <Form
               model="feedback"
-              onSubmit={values => this.handleSubmit(values)}
+              onSubmit={(values) => this.handleSubmit(values)}
             >
               <Row className="form-group">
                 <Label htmlFor="firstname" md={2}>
@@ -115,7 +123,7 @@ class Contact extends React.Component {
                     validators={{
                       required,
                       minLength: minLength(3),
-                      maxLength: maxLength(15)
+                      maxLength: maxLength(15),
                     }}
                   />
                   <Errors
@@ -125,7 +133,7 @@ class Contact extends React.Component {
                     messages={{
                       required: "Required; ",
                       minLength: "Minimum length should be 3; ",
-                      maxLength: "Maximum length should be 15; "
+                      maxLength: "Maximum length should be 15; ",
                     }}
                   />
                 </Col>
@@ -144,7 +152,7 @@ class Contact extends React.Component {
                     validators={{
                       required,
                       minLength: minLength(3),
-                      maxLength: maxLength(15)
+                      maxLength: maxLength(15),
                     }}
                   />
                   <Errors
@@ -154,7 +162,7 @@ class Contact extends React.Component {
                     messages={{
                       required: "Required; ",
                       minLength: "Minimum length should be 3; ",
-                      maxLength: "Maximum length should be 15; "
+                      maxLength: "Maximum length should be 15; ",
                     }}
                   />
                 </Col>
@@ -174,7 +182,7 @@ class Contact extends React.Component {
                       required,
                       isNumber,
                       minLength: minLength(10),
-                      maxLength: maxLength(10)
+                      maxLength: maxLength(10),
                     }}
                   />
                   <Errors
@@ -185,7 +193,7 @@ class Contact extends React.Component {
                       required: "Required; ",
                       isNumber: "Should be a number only; ",
                       minLength: "Minimum length should be 10; ",
-                      maxLength: "Maximum length should be 10; "
+                      maxLength: "Maximum length should be 10; ",
                     }}
                   />
                 </Col>
@@ -203,7 +211,7 @@ class Contact extends React.Component {
                     placeholder="abx@example.com"
                     validators={{
                       required,
-                      validEmail
+                      validEmail,
                     }}
                   />
                   <Errors
@@ -212,7 +220,7 @@ class Contact extends React.Component {
                     show="touched"
                     messages={{
                       required: "Required; ",
-                      validEmail: "Unvalid Email; "
+                      validEmail: "Unvalid Email; ",
                     }}
                   />
                 </Col>
