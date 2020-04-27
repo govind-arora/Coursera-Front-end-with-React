@@ -12,11 +12,12 @@ import {
   Label,
   Row,
   ModalBody,
-  ModalHeader
+  ModalHeader,
 } from "reactstrap";
 import { Loading } from "./LoadingComponent";
 import { LocalForm, Errors, Control } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 
 function RenderDish({ dish, isLoading, errMess }) {
   if (isLoading) {
@@ -31,7 +32,7 @@ function RenderDish({ dish, isLoading, errMess }) {
     return (
       <div className="col-12 col-md-5 m-1">
         <Card>
-          <CardImg top src={dish.image} alt={dish.name} />
+          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
           <CardBody>
             <CardTitle>{dish.name}</CardTitle>
             <CardText>{dish.description}</CardText>
@@ -42,16 +43,16 @@ function RenderDish({ dish, isLoading, errMess }) {
   }
 }
 
-const required = val => val && val.length;
-const minLength = len => val => val && val.length >= len;
-const maxLength = len => val => !val || val.length <= len;
+const required = (val) => val && val.length;
+const minLength = (len) => (val) => val && val.length >= len;
+const maxLength = (len) => (val) => !val || val.length <= len;
 
 class CommentForm extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      isModalOpen: false
+      isModalOpen: false,
     };
 
     this.toggleModal = this.toggleModal.bind(this);
@@ -60,7 +61,7 @@ class CommentForm extends React.Component {
 
   toggleModal() {
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
     });
   }
 
@@ -72,7 +73,7 @@ class CommentForm extends React.Component {
       values.comment
     );
     this.setState({
-      isModalOpen: !this.state.isModalOpen
+      isModalOpen: !this.state.isModalOpen,
     });
   }
 
@@ -86,7 +87,7 @@ class CommentForm extends React.Component {
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody className="m-3">
             <LocalForm
-              onSubmit={values => {
+              onSubmit={(values) => {
                 this.handleSubmit(values);
               }}
             >
@@ -114,7 +115,7 @@ class CommentForm extends React.Component {
                   validators={{
                     required,
                     minLength: minLength(3),
-                    maxLength: maxLength(15)
+                    maxLength: maxLength(15),
                   }}
                 />
                 <Errors
@@ -124,7 +125,7 @@ class CommentForm extends React.Component {
                   messages={{
                     required: "Required; ",
                     minLength: "Should be greater than 2 characters; ",
-                    maxLength: "Should be less than 16 characters; "
+                    maxLength: "Should be less than 16 characters; ",
                   }}
                 />
               </Row>
@@ -157,7 +158,7 @@ function RenderComments({ comments, dishId, addComment }) {
       <div className="col-12 col-md-5 m-1" style={{ textAlign: "left" }}>
         <h4>Comments</h4>
         <ul className="list-unstyled">
-          {comments.map(com => {
+          {comments.map((com) => {
             return (
               <li key={com.id}>
                 <p>{com.comment}</p>
@@ -166,7 +167,7 @@ function RenderComments({ comments, dishId, addComment }) {
                   {new Intl.DateTimeFormat("en-US", {
                     year: "numeric",
                     month: "long",
-                    day: "2-digit"
+                    day: "2-digit",
                   }).format(new Date(Date.parse(com.date)))}
                 </p>
               </li>
@@ -178,7 +179,7 @@ function RenderComments({ comments, dishId, addComment }) {
     );
 }
 
-const DishDetail = props => {
+const DishDetail = (props) => {
   if (props.isLoading) {
     return (
       <div className="container">
